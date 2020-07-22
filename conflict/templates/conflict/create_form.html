@@ -1,0 +1,65 @@
+{% extends 'conflict/base.html' %}
+{% block content %}
+    <div class="row">
+    <div class="col-md-12">
+        <fieldset>
+    {{ form.media }}
+    <form action="{% url 'conflict:create_form' %}" class="form-horizontal" method="post">
+        {% csrf_token %}
+            {% for conflict in form.conflict_fields %}
+                {% if conflict.comment.field.label %}
+                    <div class="col-md-4">
+                        <br>
+                        <div class="text-size-small text-uppercase text-semibold text-muted mb-10">{{ conflict.comment.field.label }}</div>
+                    </div>
+                {% endif %}
+                <div class="col-md-12">
+                        <div class="col-md-4 {% if conflict.confirm.field.field.obj.color %} bg-warning-400" {% endif %}>
+                            <label class="col-lg-12 control-label">
+                                {{ conflict.confirm.field.label }}<span class="text-danger">*</span>
+                            </label>
+                        </div>
+
+                        {% if not conflict.confirm.field.field.obj.only_comment %}
+                        <div class="col-md-3">
+                            <div class="form-group {% if conflict.confirm.field.errors %} has-error has-feedback {% endif %}">
+                                <div class="col-lg-12">
+                                    {{ conflict.confirm.field }}
+                                    {% if conflict.confirm.field.errors %}
+                                        <span class='help-block'>{{ conflict.confirm.field.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group {% if conflict.comment.field.errors %} has-error has-feedback {% endif %}">
+                                <div class="col-lg-12">
+                                    {{ conflict.comment.field }}
+                                    {% if conflict.comment.field.errors %}
+                                        <span class='help-block'>{{ conflict.comment.field.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ conflict.confirm.field }}
+                        <div class="col-md-8">
+                            <div class="form-group {% if conflict.comment.field.errors %} has-error has-feedback {% endif %}">
+                                <div class="col-lg-12">
+                                    {{ conflict.comment.field }}
+                                    {% if conflict.comment.field.errors %}
+                                        <span class='help-block'>{{ conflict.comment.field.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+    </form>
+        </fieldset>
+
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<form class="p-3">
+    {{ form.media }}
+    {% for conflict in data %}
+
+        <div class="form-group " id="parents">
+            <div class="forlabel bg-dark">
+                <label for="parents">{{ conflict }}</label>
+            </div>
+            <select class="form-control" id="selectParents">
+              <option value="no">Don't Confirm</option>
+              <option value="yes">Confirm</option>
+            </select>
+        </div>
+
+
+
+      <div class="form-group" id="related">
+        <label for="related">{{ conflict.question }}</label>
+        <select class="form-control" id="related">
+              <option value="no">Don't Confirm</option>
+              <option value="yes">Confirm</option>
+        </select>
+      </div>
+
+{% endfor %}
+
+    <script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/confirm_select.js' %}"></script>
+
+</body>
+</html>
+
